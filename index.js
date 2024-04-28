@@ -1,5 +1,5 @@
 const express = require("express");
-
+const passportSetup = require("./config/passport-setup");
 const app = express();
 require("dotenv").config();
 app.set("view engine", "ejs");
