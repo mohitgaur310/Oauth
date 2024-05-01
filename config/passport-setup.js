@@ -13,15 +13,12 @@ passport.use(
     async (accessToken, refreshToken, profile, done) => {
       console.log("callback fired for google passport");
       console.log("profile", profile);
-      // if (profile) {
       try {
-        // Since `register` is an asynchronous function, use `await` to wait for the promise to resolve
-        const data = await register(profile);
+        const data = await register(profile, done);
         console.log("Data:", data);
       } catch (error) {
         console.error("Error during registration:", error);
       }
-      // }
     }
   )
 );
