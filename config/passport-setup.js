@@ -1,7 +1,7 @@
 const passport = require("passport");
 require("dotenv").config();
 const register = require("../service/user-service");
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const GoogleStrategy = require("passport-google-oauth2").Strategy;
 
 passport.use(
   new GoogleStrategy(

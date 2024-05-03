@@ -16,8 +16,15 @@ router.get(
     scope: ["profile", "email"],
   })
 );
-router.get("/google/redirect", passport.authenticate("google"), (req, res) => {
-  res.send("Redirect url");
-});
+router.get(
+  "/google/redirect",
+  passport.authenticate("google", {
+    successRedirect: "/auth/google/success",
+    failureRedirect: "/auth/google/failure",
+  }),
+  (req, res) => {
+    res.send("Redirect url");
+  }
+);
 
 module.exports = router;
