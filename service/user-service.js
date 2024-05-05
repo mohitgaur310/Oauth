@@ -1,6 +1,6 @@
 const { create, findOne } = require("../dal/dal");
 const User = require("../model/user-model");
-const register = async (profile, done) => {
+const register = async (profile) => {
   if (!profile) return null;
 
   const existingUser = await findOne(User, {
@@ -8,9 +8,8 @@ const register = async (profile, done) => {
   });
   console.log("existingUser===>>", existingUser._id);
   if (existingUser) {
-    done(null, existingUser._id);
     console.log("user existing");
-    // return null;
+    return existingUser;
   }
 
   const data = {
@@ -20,8 +19,16 @@ const register = async (profile, done) => {
 
   const response = await create(User, data);
   if (!response) return null;
-  done(null, response._id);
+
   return await response;
 };
 
-module.exports = register;
+const findUser = async (id) => {
+  try {
+    const user = await findOne(User, { _id: id });
+    if (!user) return null;
+
+    return user;
+  } catch (error) {}
+};
+module.exports = { register, findUser };

@@ -1,7 +1,23 @@
 const passport = require("passport");
 require("dotenv").config();
-const register = require("../service/user-service");
+const { register, findUser } = require("../service/user-service");
 const GoogleStrategy = require("passport-google-oauth2").Strategy;
+
+passport.serializeUser((user, done) => {
+  done(null, user._id);
+});
+
+passport.deserializeUser((id, done) => {
+  console.log("Deserializing user ID:", id);
+  findUser(id)
+    .then((user) => {
+      console.log("Found user:", user);
+      done(null, user);
+    })
+    .catch((error) => {
+      done(error, null);
+    });
+});
 
 passport.use(
   new GoogleStrategy(
@@ -14,7 +30,9 @@ passport.use(
       console.log("callback fired for google passport");
       console.log("profile", profile);
       try {
-        const data = await register(profile, done);
+        console.log("done====>", done);
+        const data = await register(profile);
+        if (data) done(null, data);
         console.log("Data:", data);
       } catch (error) {
         console.error("Error during registration:", error);
