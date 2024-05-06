@@ -1,5 +1,4 @@
 const express = require("express");
-const passportSetup = require("./config/passport-setup");
 const app = express();
 require("dotenv").config();
 app.set("view engine", "ejs");
@@ -10,7 +9,6 @@ const cookieParser = require("cookie-parser");
 const connectDb = require("./db/db");
 
 app.use(cookieParser());
-app.use("/auth", authRoutes);
 app.use(
   session({
     secret: process.env.COOKIE_KEY || "sdfdsafdsfdsfdsfdfdsfds",
@@ -21,8 +19,10 @@ app.use(
     },
   })
 );
+const passportSetup = require("./config/passport-setup");
 app.use(passport.initialize());
 app.use(passport.session());
+app.use("/auth", authRoutes);
 app.get("/home", (req, res) => {
   res.render("home");
 });
