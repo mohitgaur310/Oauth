@@ -7,6 +7,9 @@ const userSchema = new mongoose.Schema({
   googleId: {
     type: String,
   },
+  imageUrl: {
+    type: String,
+  },
 });
 
 const User = mongoose.model("user", userSchema);

@@ -14,6 +14,7 @@ const register = async (profile) => {
   const data = {
     username: profile.displayName,
     googleId: profile.emails[0]?.value,
+    imageUrl: profile.picture,
   };
 
   const response = await create(User, data);
