@@ -8,10 +8,8 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  console.log("Deserializing user ID:", id);
   findUser(id)
     .then((user) => {
-      console.log("Found user:", user);
       done(null, user);
     })
     .catch((error) => {
@@ -27,13 +25,9 @@ passport.use(
       callbackURL: `${process.env.CALLBACK_URL_GOOGLE}`,
     },
     async (accessToken, refreshToken, profile, done) => {
-      console.log("callback fired for google passport");
-      console.log("profile", profile);
       try {
-        console.log("done====>", done);
         const data = await register(profile);
         if (data) done(null, data);
-        console.log("Data:", data);
       } catch (error) {
         console.error("Error during registration:", error);
       }

@@ -6,9 +6,8 @@ const register = async (profile) => {
   const existingUser = await findOne(User, {
     googleId: profile.emails[0]?.value,
   });
-  console.log("existingUser===>>", existingUser._id);
+
   if (existingUser) {
-    console.log("user existing");
     return existingUser;
   }
 
